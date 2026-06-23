@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return "Bonjour Mahoua"
+    return "Salam ! Bienvenue sur MCEA IA Mentor 🚀"
 
 @app.route("/webhook", methods=["POST"])
 def webhook():
