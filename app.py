@@ -1,5 +1,5 @@
 from flask import Flask, request
-import os
+from twilio.twiml.messaging_response import MessagingResponse
 
 app = Flask(__name__)
 
@@ -9,9 +9,17 @@ def home():
 
 @app.route("/webhook", methods=["POST"])
 def webhook():
-    print(request.form)
-    return "OK"
+    incoming_msg = request.values.get("Body", "").lower()
+
+    response = MessagingResponse()
+    message = response.message()
+
+    if "bonjour" in incoming_msg:
+        message.body("Salam 👋 Bienvenue sur MCEA IA Mentor 🚀")
+    else:
+        message.body("Je suis MCEA IA Mentor. Comment puis-je vous aider ?")
+
+    return str(response)
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(host="0.0.0.0", port=5000)
